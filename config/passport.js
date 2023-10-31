@@ -24,14 +24,14 @@ module.exports = function (passport) {
           } else {
             return done(null, false, { message: "Password incorrect" });
           }
-        });
+        }); 
       });
     })
   );
 
   passport.serializeUser(function (user, done) {
     done(null, user.id);
-  });
+fr3t2rf  });
 
   passport.deserializeUser(function (id, done) {
     User.findById(id, function (err, user) {
