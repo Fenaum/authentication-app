@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please enter your password"]
     },
+    salt: String,
+    hash: String,
 })
 
 const User = mongoose.model('User', userSchema);
