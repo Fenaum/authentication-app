@@ -21,3 +21,5 @@ bcrypt.hash(plaintextPassword, 10, (err, hash) => {
     });
   }
 });
+
+module.exports = bcrypt;

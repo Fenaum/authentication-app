@@ -1,15 +1,27 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const passport = require("passport");
 const session = require("express-session");
-var passport = require("passport");
-var crypto = require("crypto");
-var routes = require("./routes");
-const connection = require("./config/database");
-
-const MongoStore = require('connect-mongo')(session);
+// Other imports...
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+// Configure session store
+app.use(
+  session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({
+      url: 'mongodb://localhost:27017/your-database',
+      collection: 'sessions' // Collection name to store sessions
+    })
+  })
+);
 
+// Other middleware and routes...
+
+
+const port = process.env.PORT || 3000; // Choose your desired port number.
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
