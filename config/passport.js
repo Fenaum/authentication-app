@@ -1,7 +1,7 @@
 // passport-config.js
 const passport = require('passport');
 const LocalStrategy = require("passport-local").Strategy;
-const User = require("./models/User"); // Assuming you have a User model defined
+const User = require('../models/User'); // Assuming you have a User model defined
 
 const customFields = {
     usernameField: 'uname',
@@ -26,3 +26,5 @@ function verifyCallback(uname, pw, done) {
 const strategy = new LocalStrategy(customFields, verifyCallback);
 
 passport.use(strategy);
+
+module.exports = passport;

@@ -1,27 +1,29 @@
 const express = require("express");
-const passport = require("passport");
+const passport = require("./config/passport"); // Your passport configuration
 const session = require("express-session");
-// Other imports...
+const routes = require('./routes/auth.js')
+const mongoose = require('mongoose')
 
 const app = express();
 
-// Configure session store
+// Express body parser
+app.use(express.urlencoded({ extended: true }));
+
+// Express session
 app.use(
   session({
-    secret: 'your-secret-key',
-    resave: false,
-    saveUninitialized: false,
-    store: new MongoStore({
-      url: 'mongodb://localhost:27017/your-database',
-      collection: 'sessions' // Collection name to store sessions
-    })
+    secret: "secret", // Replace 'secret' with your own secret key
+    resave: true,
+    saveUninitialized: true,
   })
 );
 
-// Other middleware and routes...
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
+// Routes
+app.use('/', routes)
+const PORT = process.env.PORT || 5000;
 
-const port = process.env.PORT || 3000; // Choose your desired port number.
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+app.listen(PORT, console.log(`Server started on port ${PORT}`));
