@@ -26,21 +26,27 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="username">Username:</label>
+      <label htmlFor="username" className="usernameLabel">
+        Username:
+      </label>
       <input
         type="text"
         name="username"
         onChange={handleChange}
         value={formData.username}
+        className="userNameInput"
       />
-      <label htmlFor="password">Password:</label>
+      <label htmlFor="password" className="passwordLabel">
+        Password:
+      </label>
       <input
         type="password"
         name="password"
         onChange={handleChange}
         value={formData.password}
+        className="passwordInput"
       />
-      <input type="submit" value="Login" />
+      <input type="submit" value="Login" className="loginBtn" />
     </form>
   );
 }

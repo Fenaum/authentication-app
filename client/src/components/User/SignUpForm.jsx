@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './styles/SignUpForm.css'
 
 export default function SignUpForm() {
     const [formData, setFormData] = useState({
@@ -28,7 +29,7 @@ export default function SignUpForm() {
 
     return (
       <form>
-        <label htmlFor="username" className="">
+        <label htmlFor="username" className="usernameLabel">
           Username:
         </label>
         <input
@@ -37,9 +38,9 @@ export default function SignUpForm() {
           name="username"
           onChange={handleChange}
           value={formData.username}
-          className=""
+          className="userNameInput"
         ></input>
-        <label htmlFor="password" className="">
+        <label htmlFor="password" className="passwordLabel">
           Password:
         </label>
         <input
@@ -48,9 +49,9 @@ export default function SignUpForm() {
           name="password"
           onChange={handleChange}
           value={formData.password}
-          className=""
+          className="passwordInput"
         ></input>
-        <label htmlFor="email" className="">
+        <label htmlFor="email" className="emailLabel">
           E-mail:
         </label>
         <input
@@ -59,23 +60,25 @@ export default function SignUpForm() {
           name="email"
           onChange={handleChange}
           value={formData.email}
-          className=""
+          className="emailInput"
         ></input>
+        <div>
         <input
           type="checkbox"
           name="sms"
           checked={formData.sms}
           onChange={handleChange}
-          className=""
+          className="smsInput"
         ></input>
-        <label htmlFor="sms" className="sms">
+        <label htmlFor="sms" className="smsLabel">
           Receive Exclusive Offers and Updates via SMS
         </label>
+        </div>
         <input
           type="submit"
           onClick={handleSubmit}
           name="submitButton"
-          className=""
+          className="submitBtn"
         ></input>
       </form>
     );

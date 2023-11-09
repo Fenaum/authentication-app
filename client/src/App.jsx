@@ -5,6 +5,7 @@ import SignUpForm from "./components/User/SignUpForm";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import Profile from "./components/User/Profile";
+import './assets/styles/style.css'
 
 export default function App() {
   const [user, setUser] = useState(null); // initialize user state to null
