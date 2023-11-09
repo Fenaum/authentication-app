@@ -1,0 +1,50 @@
+/* App.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 90%;
+    margin: auto;
+    overflow: hidden;
+}
+
+.navbar {
+    background-color: #fff;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+}
+
+.navbar__title {
+    color: #333;
+    font-size: 24px;
+}
+
+.navbar__list {
+    list-style: none;
+    display: flex;
+}
+
+.navbar__item {
+    margin-left: 20px;
+}
+
+.navbar__link {
+    color: #333;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.navbar__link:hover {
+    color: #007BFF;
+}
