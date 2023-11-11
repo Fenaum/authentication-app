@@ -17,6 +17,12 @@ const authController = {
       return res.status(400).json({ error: "Username already exists" });
     }
 
+    // Check if username already exists
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
+      return res.status(400).json({ error: "This E-mail is already in used" });
+    }
+
     // Check if password is provided
     if (!password) {
       return res.status(400).json({ error: "Password is required" });
@@ -44,7 +50,15 @@ const authController = {
       });
     } catch (err) {
       console.error("Registration Error:", err);
-      return res.status(500).json({ error: "Error creating new user" });
+      if (err.name === "MongoError") {
+        return res
+          .status(500)
+          .json({ error: "Database error: " + err.message });
+      } else if (err.name === "TypeError") {
+        return res.status(500).json({ error: "Type error: " + err.message });
+      } else {
+        return res.status(500).json({ error: "Unknown error: " + err.message });
+      }
     }
   },
 

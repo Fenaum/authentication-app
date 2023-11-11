@@ -1,3 +1,9 @@
+// .ENV CONFIG
+require('dotenv').config();
+const secretKey = process.env.SECRET_KEY;
+console.log(secretKey)
+
+//import packages
 const express = require("express");
 const passport = require("./config/passport"); // Your passport configuration
 const session = require("express-session");
@@ -6,11 +12,20 @@ const routes = require("./routes/auth.js");
 const mongoose = require("mongoose");
 const cors = require('cors')
 
+
 // Connect to MongoDB
-mongoose.connect("mongodb://localhost/authenticator", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose
+  .connect("mongodb://127.0.0.1:27017/authenticator", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("MongoDB connected successfully");
+  })
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+  });
+
 
 const app = express();
 
@@ -24,10 +39,12 @@ app.use(cors());
 // Express session
 app.use(
   session({
-    secret: "secret", // Replace 'secret' with your own secret key
+    secret: secretKey, // Replace 'secret' with your own secret key
     resave: true,
     saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: "mongodb://localhost/authenticator" }), // Use MongoStore and pass the mongoose connection
+    store: MongoStore.create({
+      mongoUrl: "mongodb://127.0.0.1:27017/authenticator",
+    }), // Use MongoStore and pass the mongoose connection
     cookie: {
       maxAge: 1000 * 60 * 10, // 1000 milliseconds * 60 seconds * 60 minutes * 24 hours * 14 days
     },
