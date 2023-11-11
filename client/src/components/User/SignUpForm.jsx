@@ -52,8 +52,8 @@ export default function SignUpForm() {
 
 
   return (
-    <form>
-      <label htmlFor="username" className="usernameLabel" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="username" className="usernameLabel">
         Username:
       </label>
       <input
@@ -98,11 +98,7 @@ export default function SignUpForm() {
           Receive Exclusive Offers and Updates via SMS
         </label>
       </div>
-      <input
-        type="submit"
-        name="submitButton"
-        className="submitBtn"
-      ></input>
+      <input type="submit" name="submitButton" className="submitBtn"></input>
     </form>
   );
 }
