@@ -1,29 +1,42 @@
-// passport-config.js
-const passport = require('passport');
+const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const User = require('../models/User'); // Assuming you have a User model defined
+const User = require("../models/User");
 
 const customFields = {
-    usernameField: 'uname',
-    passwordField: 'pw'
-}
+  usernameField: "loginfield",
+  passwordField: "pw",
+};
 
-function verifyCallback(uname, pw, done) {
-    User.findOne({ username: uname }, function (err, user) {
-      if (err) {
-        return done(err);
-      }
-      if (!user) {
-        return done(null, false, { message: "Incorrect username." });
-      }
-      if (!user.validPassword(pw)) {
-        return done(null, false, { message: "Incorrect password." });
-      }
-      return done(null, user);
+const verifyCallback = async (input, pw, done) => {
+  try {
+    const user = await User.findOne({
+      $or: [{ username: input }, { email: input }],
     });
-}
+    if (!user) {
+      return done(null, false, { message: "Incorrect username or email." });
+    }
+    if (!user.validPassword(pw)) {
+      return done(null, false, { message: "Incorrect password." });
+    }
+    return done(null, user);
+  } catch (err) {
+    return done(err);
+  }
+};
 
 const strategy = new LocalStrategy(customFields, verifyCallback);
+
+// Serialize user to store in the session
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+// Deserialize user from the session
+passport.deserializeUser((id, done) => {
+  User.findById(id)
+    .then(user => done(null, user))
+    .catch(err => done(err));
+});
 
 passport.use(strategy);
 
