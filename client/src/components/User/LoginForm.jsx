@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useFetch from "../hooks/useFetch";
 
 export default function LoginForm() {
   const [formData, setFormData] = useState({
@@ -13,17 +14,32 @@ export default function LoginForm() {
     });
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    // handle form data
-    console.log(formData);
-    // reset form
-    setFormData({
-      username: "",
-      password: "",
-    });
-  }
+ function handleSubmit(e) {
+   e.preventDefault();
 
+   const { data, error, isLoading } = useFetch("http://localhost:5000/login", {
+     method: "POST",
+     headers: { "Content-Type": "application/json" },
+     body: JSON.stringify(formData),
+   });
+
+   if (error) {
+     console.error("Error:", error);
+     return;
+   }
+
+   if (!isLoading && data) {
+     // handle successful login here
+     console.log("Login successful:", data);
+   }
+
+   // reset form
+   setFormData({
+     username: "",
+     password: "",
+   });
+ }
+ 
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="username" className="usernameLabel">
