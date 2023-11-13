@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
+function useFetch(url, options, immediate = true) {
 
-function useFetch(url, options) {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
+  const executeFetch = useCallback(() => {
     const abortController = new AbortController();
     setIsLoading(true);
     fetch(url, options, { signal: abortController.signal })
@@ -30,7 +30,13 @@ function useFetch(url, options) {
     return () => abortController.abort();
   }, [url, options]);
 
-  return { data, error, isLoading };
+  useEffect(() => {
+    if (immediate) {
+      executeFetch();
+    }
+  }, [executeFetch, immediate]);
+
+  return { executeFetch, data, error, isLoading };
 }
 
 export default useFetch;

@@ -3,8 +3,8 @@ const LocalStrategy = require("passport-local").Strategy;
 const User = require("../models/User");
 
 const customFields = {
-  usernameField: "loginfield",
-  passwordField: "pw",
+  usernameField: "username",
+  passwordField: "password",
 };
 
 const verifyCallback = async (input, pw, done) => {
