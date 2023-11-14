@@ -54,7 +54,6 @@ export default function LoginForm() {
    });
  }
  
-=======
   function handleSubmit(e) {
     e.preventDefault();
     executeFetch(); // call the function returned by useFetch
