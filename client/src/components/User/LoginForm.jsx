@@ -66,6 +66,7 @@ export default function LoginForm() {
     } else if (!isLoading && data) {
       console.log("Login successful");
       // handle successful login here (e.g. redirect to another page)
+      alert("Login Success"); // Add this line
     }
   }, [data, error, isLoading]);
 
